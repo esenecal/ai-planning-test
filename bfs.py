@@ -3,10 +3,10 @@
 
 from collections import deque       # for the use of queues. https://www.geeksforgeeks.org/python/queue-in-python/
 
-def bfs_goal(graph, root, goal):    # find shortest path to goal.
+def bfs_goal(graph, root, goal) -> list[str]:    # find shortest path to goal.
     # verify the root is in the graph.
     if root not in graph.keys():
-        return 0
+        return ["Error"]
     
     q = deque()                 # initialize queue
     visited = {root}            # add root to visited set
@@ -35,12 +35,13 @@ def bfs_goal(graph, root, goal):    # find shortest path to goal.
                 visited.add(node)               # mark it as visited
                 parent_nodes[node] = vertex     # mark vertex as node's parent.
                 q.append(node)                  # add node to the queue so we can iterate through its children later
+    return ["Error"]
 
 # returns dictionary with distance from root to each node
-def bfs_dist(graph, root):
+def bfs_dist(graph, root) -> dict:
     # verify root is in graph
     if root not in graph.keys():
-        return 0
+        return {"Error": None}
     
     q = deque()             # initialize queue
     visited = {root}        # add root to visited set
