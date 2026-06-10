@@ -6,13 +6,15 @@ from collections import deque       # for the use of queues. https://www.geeksfo
 def bfs_goal(graph, root, goal) -> list[str]:    # find shortest path to goal.
     # verify the root is in the graph.
     if root not in graph.keys():
-        return ["Error"]
+        raise KeyError(f"Error: {root} not in graph")
+    if goal not in graph.keys():
+        raise KeyError(f"Error: {goal} not in graph")
     
     q = deque()                 # initialize queue
     visited = {root}            # add root to visited set
     q.append(root)              # add root to queue
     parent_nodes = {}           # create an empty dictionary with the keys of the graph.
-    for key in graph.key():
+    for key in graph.keys():
         parent_nodes[key] = None
     # parent_nodes provides the parent of each node. "f": "a" means "a" is the parent of "f"
 
@@ -35,13 +37,13 @@ def bfs_goal(graph, root, goal) -> list[str]:    # find shortest path to goal.
                 visited.add(node)               # mark it as visited
                 parent_nodes[node] = vertex     # mark vertex as node's parent.
                 q.append(node)                  # add node to the queue so we can iterate through its children later
-    return ["Error"]
+    raise Exception("No goal met")
 
 # returns dictionary with distance from root to each node
 def bfs_dist(graph, root) -> dict:
     # verify root is in graph
     if root not in graph.keys():
-        return {"Error": None}
+        raise KeyError(f"Error: {root} not in graph")
     
     q = deque()             # initialize queue
     visited = {root}        # add root to visited set
