@@ -1,0 +1,18 @@
+from dijkstra import dijkstra_distance
+
+import pytest
+
+test_weighted_graph_1 = {       # each has a tuple showing the weight between the nodes
+    "a": [("b", 2), ("d", 1)],
+    "b": [("a", 2), ("c", 3), ("d", 2), ("e", 4), ("f", 5)], 
+    "c": [("b", 3), ("e", 1)], 
+    "d": [("a", 1), ("b", 2), ("e", 4)], 
+    "e": [("b", 4), ("c", 1), ("d", 3), ("f", 2)], 
+    "f": [("b", 5), ("e", 2)]
+}
+
+def test_dijkstra_wg1():
+
+    a = dijkstra_distance(test_weighted_graph_1, "a")
+
+    assert 0 == 0
