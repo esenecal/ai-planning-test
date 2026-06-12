@@ -15,4 +15,13 @@ def test_dijkstra_wg1():
 
     a = dijkstra_distance(test_weighted_graph_1, "a")
 
-    assert 0 == 0
+    goal = {
+        "a": 0,
+        "b": 2,
+        "c": 5,
+        "d": 1,
+        "e": 4,
+        "f": 6,
+    }
+
+    assert a == goal
