@@ -1,4 +1,4 @@
-from dijkstra import dijkstra_distance
+from dijkstra import dijkstra_distance, dijkstra_goal
 
 import pytest
 
@@ -25,3 +25,11 @@ def test_dijkstra_wg1():
     }
 
     assert a == goal
+
+def test_dijkstra_wg1_af():
+
+    path = dijkstra_goal(test_weighted_graph_1, "a", "f")
+
+    goal = ["a", "d", "e", "f"]
+
+    assert path == goal
