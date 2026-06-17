@@ -33,3 +33,19 @@ def test_dijkstra_wg1_af():
     goal = ["a", "d", "e", "f"]
 
     assert path == goal
+
+def test_dijkstra_wg1_cd():
+
+    path = dijkstra_goal(test_weighted_graph_1, "c", "d")
+
+    goal = ["c", "e", "d"]
+
+    assert path == goal
+
+def test_dijkstra_wg1_cf():
+
+    path = dijkstra_goal(test_weighted_graph_1, "b", "f")
+
+    goal = ["b", "f"]
+
+    assert path == goal

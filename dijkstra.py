@@ -39,7 +39,7 @@ def dijkstra_distance(graph, root):
             adj_dist = distances[node_name] + adjacent[1]
             if adj_dist < distances[adjacent[0]]:       # if the new distance is less than the current saved distance
                 distances[adjacent[0]] = adj_dist
-                heapq.heappush(unvisited, (adj_dist, node_name))        # example given just pushed things on the heap, creating duplicates. These are passed over.
+                heapq.heappush(unvisited, (adj_dist, adjacent[0]))        # example given just pushed things on the heap, creating duplicates. These are passed over.
         
         # remove node from unvisited
         # unvisited.remove(node)
@@ -78,14 +78,16 @@ def dijkstra_goal(graph, root, goal):
 
         # iterate through the nodes adjacent to node. Update their distances by adding their distance from node to node's total distance.
         for adjacent in graph[node_name]:        # adjacent is a tuple with (node_name, edge_length)
-
+            adjacent_name = adjacent[0]
+            adjacent_distance = adjacent[1]
             # calculate distance 
             adj_dist = distances[node_name][0] + adjacent[1]
-            if adj_dist < distances[adjacent[0]][0]:                    # if the new distance is less than the current saved distance
-                distances[adjacent[0]][0] = adj_dist
-                distances[adjacent[0]][1] = node_name                   # set the previous node for adjacent to node_name. This means that moving from that node to it's previous node puts it along the simplest route. See the attached YouTube video
-                                                                        # In other words, if the path along node_name is faster for adjacent_node than the path already saved (denoted by distances[n][1]), switch to this new path (thus, this new previous_node)
-                heapq.heappush(unvisited, (adj_dist, node_name))        # example given just pushed things on the heap, creating duplicates. These are passed over.
+            if adj_dist < distances[adjacent_name][0]:                    # if the new distance is less than the current saved distance
+                distances[adjacent_name][0] = adj_dist
+                distances[adjacent_name][1] = node_name                     # set the previous node for adjacent to node_name. This means that moving from that node to it's previous node puts it along the simplest route. See the attached YouTube video
+                                                                            # In other words, if the path along node_name is faster for adjacent_node than the path already saved (denoted by distances[n][1]), switch to this new path (thus, this new previous_node)
+                heapq.heappush(unvisited, (adj_dist, adjacent_name))        # example given just pushed things on the heap, creating duplicates. These are passed over.
+                                                                            # we are placing the new distances for the each node in the heap.
     
     # construct the shortest path from root to goal, working backwards from goal. Similar to bfs_goal
     path = [goal]
