@@ -65,3 +65,31 @@ def bfs_dist(graph, root) -> dict:
                 q.append(node)          # add node to q
         i += 1
     return d
+
+# bfs but for use on a weighted graph (in other words, assuming each weight is 1)
+def bfs_dist_weighted(graph, root) -> dict:
+    # verify root is in graph
+    if root not in graph.keys():
+        raise KeyError(f"Error: {root} not in graph")
+    
+    q = deque()             # initialize queue
+    visited = {root}        # add root to visited set
+    q.append(root)          # add root to q
+    d = {}                  # create empty dictionary with keys for each node
+    for key in graph.keys():
+        d[key] = 0          # distance is, by default, 0.
+    
+    i = 1                   # iterable for tracking distance
+    while len(q) != 0:      # while our q is not empty:
+
+        vertex = q.popleft()        # get node on top of q, name it vertex.
+
+        # for each node connected to the vertex
+        for node in graph.get(vertex):
+            node_name = node[0]             # get the name of the node so we can ignore the weight
+            if node_name not in visited:    # if node has not been visited.
+                visited.add(node_name)      # add node to visited
+                d[node_name] = i            # ad distance from root to d
+                q.append(node_name)         # add node to q
+        i += 1
+    return d

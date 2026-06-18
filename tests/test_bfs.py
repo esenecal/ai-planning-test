@@ -90,6 +90,17 @@ def test_bfs_dist_ug1_a():
         "f": 2
     }
 
+def test_bfs_dist_ug1_f():
+    distance = bfs_dist(test_undirected_graph_1, "f")
+    assert distance == {
+        "a": 2,
+        "b": 1,
+        "c": 2,
+        "d": 2,
+        "e": 1,
+        "f": 0
+    }
+
 def test_bfs_dist_ug1_no_root():
     with pytest.raises(KeyError) as exception:
         bfs_dist(test_undirected_graph_1, "z")

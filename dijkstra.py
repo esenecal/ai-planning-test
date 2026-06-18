@@ -86,7 +86,10 @@ def dijkstra_goal(graph, root, goal):
                 distances[adjacent_name][0] = adj_dist
                 distances[adjacent_name][1] = node_name                     # set the previous node for adjacent to node_name. This means that moving from that node to it's previous node puts it along the simplest route. See the attached YouTube video
                                                                             # In other words, if the path along node_name is faster for adjacent_node than the path already saved (denoted by distances[n][1]), switch to this new path (thus, this new previous_node)
-                heapq.heappush(unvisited, (adj_dist, adjacent_name))        # example given just pushed things on the heap, creating duplicates. These are passed over.
+                # the a_star wikipedia pseudocode has a conditional where it only pushes onto the heap if the node is not already on it.
+                # as this implementation tracks distances in the heap, not sure how effective this will be. But may bo good for edge cases.
+                if (adj_dist, adjacent_name) not in unvisited:
+                    heapq.heappush(unvisited, (adj_dist, adjacent_name))        # example given just pushed things on the heap, creating duplicates. These are passed over.
                                                                             # we are placing the new distances for the each node in the heap.
     
     # construct the shortest path from root to goal, working backwards from goal. Similar to bfs_goal
