@@ -28,8 +28,41 @@ Note that the goal state does not necessarily consider all conditions, only some
 
 Also note that there may be a possibility to use propositional statements in an operator's preconditions. For example, the use of $A\cup B$ may be possible. 
 
-I believe that a directed graph (with weights later given) can be created by considering which operator, when executed, fulfills conditions that are required by another operator. It is possible that multiple operators not necessarily chained together may create effects that fulfill another operator's preconditions; this is a more complex situation that may need to be accounted for. 
+I believe that a directed graph (with weights later given) can be created by considering which operator, when executed, fulfills conditions that are required by another operator. It is possible that multiple operators not necessarily chained together may create effects that fulfill another operator's preconditions; this is a more complex situation that may need to be accounted for. This may be addressed by starting goal-first (see below).
 
 So, each member of the operator class will contain each of these four ($\langle \alpha, \beta, \gamma, \delta\rangle$) sets of conditions. When they are executed, the world state will be changed according to this data. 
 
-The planning algorithm works by two ways: we can either start at the goal state and move back via preconditions until we reach preconditions that are fulfilled by the world's state, or start at the initial state, search for an operator in which the world state fulfills its preconditions, and then search along the operators until we reach one that fulfills the goal state. The STRIPS paper (https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/strips.pdf) seems to suggest the former by, to my understanding, stating the preconditions required of the operator fulfilling the goal state would become a subgoal (page 5), which makes sense; searching for a start then for the goal is less efficient.
+The planning algorithm works by two ways: we can either start at the goal state and move back via preconditions until we reach preconditions that are fulfilled by the world's state, or start at the initial state, search for an operator in which the world state fulfills its preconditions, and then search along the operators until we reach one that fulfills the goal state. The STRIPS paper (https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/strips.pdf) seems to suggest the former by, to my understanding, stating the preconditions required of the operator fulfilling the goal state would become a subgoal (page 5), which makes sense; searching for a start then for the goal is less efficient. 
+
+In the event that an operator does not fulfill a goal/subgoal state (which, again, may be the preconditions for anotehr operator), the algorithm should select an operator that fulfills the most--for example, that fulfills only part of the conditions required. Then the search can continue, using this new world state to find more operators that work.
+
+Here is an example of a STRIPS instance:
+
+$$
+\langle
+    (P, Q),
+    (
+        \langle (P), (Q), (Q), ()\rangle,
+        \langle (P, Q), (), (), (P)\rangle,
+        \langle (Q), (P), (P), ()\rangle,
+        \langle (), (P, Q), (P), ()\rangle
+    ),
+    (P),
+    \langle (Q), (P)\rangle
+\rangle
+$$
+
+To break it down:
+- $P = (P, Q)$ where $P$ and $Q$ are true/false conditions.
+- $O = (\langle (P), (Q), (Q), ()\rangle, \langle (P, Q), (), (), (P)\rangle, \langle (Q), (P), (P), ()\rangle, \langle (), (P, Q), (P), ()\rangle)$ where:
+    - $O_1 = \langle (P), (Q), (Q), ()\rangle$:
+        - $preconditions(P = T, Q = F)$,  $postconditions(Q = T)$
+    - $O_2 = \langle (P, Q), (), (), (P)\rangle$:
+        - $preconditions(P = T, Q = T)$,  $postconditions(P = F)$
+    - $O_3 = \langle (Q), (P), (P), ()\rangle$:
+        - $preconditions(Q = T, P = F)$,  $postconditions(P = T)$
+    - $O_4 = \langle (), (P, Q), (P), ()\rangle$:
+        - $preconditions(P = F, Q = F)$,  $postconditions(P = T)$
+- $I = (P)$; $P = T$, $Q = F$ is the initial world state
+- $\langle (Q), (P)\rangle$; $Q = T$, $P = F$ is the goal
+
