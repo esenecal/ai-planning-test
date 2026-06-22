@@ -34,6 +34,7 @@ def a_star(graph, root, goal, h):
         # select node with lowest distance that has not been visited.
         node = heapq.heappop(unvisited)     # pop the node with the lowest distance.
         node_name = node[1]                 # remember--unvisited is formatted (total_distance, node). graph is formatted (node_name, edge_length)
+        if node_name
 
         # iterate through the nodes adjacent to node. Update their distances by adding their distance from node to node's total distance.
         for adjacent in graph[node_name]:        # adjacent is a tuple with (node_name, edge_length)

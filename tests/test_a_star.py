@@ -12,6 +12,13 @@ test_weighted_graph_1 = {       # each has a tuple showing the weight between th
     "f": [("b", 5), ("e", 2)]
 }
 
+test_weighted_directed_1 = {
+    "a": [("b", 1), ("c", 4)],
+    "b": [("c", 2), ("d", 2)],
+    "c": [],
+    "d": [("a", 2), ("c", 1)]
+}
+
 def test_a_star_wg1_af():
 
     h = bfs_dist_weighted(test_weighted_graph_1, "f")
@@ -24,3 +31,5 @@ def test_a_star_wg1_af():
         "e": 1,
         "f": 0
     }
+
+    
