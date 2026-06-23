@@ -15,22 +15,30 @@ def a_star(graph, root, goal, h):
     dist_to_node = {key: float('inf') for key in graph.keys()}  # dictionary tracking known costs of root to a node
     dist_to_node[root] = 0              # set the distance to the root node as 0
 
-    est_path = {key: float('inf') for key in graph.keys()}  # dictionary tracking best guess of distance from root to goal, through n.
-    est_path[root] = h[root]                                # in other words, est_path[n] = dist_to_node[n] (distance from root to n) + h(n) (estimated distance from n to goal)
+    est_path_dist = {key: float('inf') for key in graph.keys()}  # dictionary tracking best guess of distance from root to goal, through n.
+    est_path_dist[root] = h[root]                                # in other words, est_path_dist[n] = dist_to_node[n] (distance from root to n) + h(n) (estimated distance from n to goal)
 
-    open_set = [(est_path[root], root)]     # tracks nodes for expansion. We also add a node's estimated path value; in other cases with custom objects, each node can track their own distance and be updated on the fly.
-    heapq.heapify(open_set)                 # convert open_set to a priority queue. It will prioritize nodes with a low estimated path (est_path)
+    open_set = [(est_path_dist[root], root)]     # tracks nodes for expansion. We also add a node's estimated path value; in other cases with custom objects, each node can track their own distance and be updated on the fly.
+    heapq.heapify(open_set)                 # convert open_set to a priority queue. It will prioritize nodes with a low estimated path (est_path_dist)
     in_open_set = {root}           # tracks which nodes are in the priority queue, as each instance of a node will have a different distance.
 
     while len(open_set) != 0:   # while open_set is not empty
-        current_node = heapq.heappop(open_set)      # get the node with the lowest est_path distance
+        current_node = heapq.heappop(open_set)      # get the node with the lowest est_path_dist distance
         current_node_name = current_node[1]
         in_open_set.remove(current_node_name)       # update the queue tracker
         
         # if current_node is the goal node, then construct the shortest path and return it
         if current_node_name == goal:
+            print(prev)
             # reconstruct the path
-            return prev
+            path = list()
+            n = goal
+            while n != root:
+                path.insert(0, n)
+                n = prev[n]
+            # we have now reached n = root. So add that.
+            path.insert(0, n)
+            return path
         
         # iterate through the adjacent nodes to current_node, calculating their estimated distance and updating as needed.
         for adjacent_node in graph[current_node_name]:
@@ -44,10 +52,10 @@ def a_star(graph, root, goal, h):
 
                 prev[adjacent_node_name] = current_node_name                                                # note the previous node to adjacent (which is current)
                 dist_to_node[adjacent_node_name] = estimated_dist_to_adjacent                               # note that the distance from root to adjacent_node is the estimated_dist_to_adjacent
-                est_path[adjacent_node_name] = estimated_dist_to_adjacent + h[adjacent_node_name]           # therefore, the estimated path from root to goal through adjacent_node is the estimated_dist_to_adjacent + the heuristic value estimate of adjacent_node to goal
+                est_path_dist[adjacent_node_name] = estimated_dist_to_adjacent + h[adjacent_node_name]           # therefore, the estimated path from root to goal through adjacent_node is the estimated_dist_to_adjacent + the heuristic value estimate of adjacent_node to goal
 
                 if adjacent_node_name not in in_open_set:
-                    heapq.heappush(open_set, (est_path[adjacent_node_name], adjacent_node_name))    # add the adjacent node and it's estimated path to the heap.
+                    heapq.heappush(open_set, (est_path_dist[adjacent_node_name], adjacent_node_name))    # add the adjacent node and it's estimated path to the heap.
                     in_open_set.add(adjacent_node_name)                                             # update the queue tracker
         
     return "error"
