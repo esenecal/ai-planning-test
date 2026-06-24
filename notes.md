@@ -66,3 +66,10 @@ To break it down:
 - $I = (P)$; $P = T$, $Q = F$ is the initial world state
 - $\langle (Q), (P)\rangle$; $Q = T$, $P = F$ is the goal
 
+## A*
+
+The A* search algorithm is similar to Dijkstra's with the difference being that it uses a heuristic function $h$ to approximate the most efficient path, where $h$ is a problem-specific estimate of a node's distance to the goal (https://en.wikipedia.org/wiki/A*_search_algorithm)
+
+Our code, based on the pseudocode found at the Wikipedia article above, uses the heuristic function h. A dictionary `est_path_dist` tracks the sum of the distance from root to a node and h(n), the estimated distance from the node to the goal. This estimated path distance is then placed in the priority queue, meaning nodes with a low estimated path distance will be prioritized for selection.
+
+The current iteration does not use a closed set.
