@@ -72,4 +72,30 @@ The A* search algorithm is similar to Dijkstra's with the difference being that 
 
 Our code, based on the pseudocode found at the Wikipedia article above, uses the heuristic function h. A dictionary `est_path_dist` tracks the sum of the distance from root to a node and h(n), the estimated distance from the node to the goal. This estimated path distance is then placed in the priority queue, meaning nodes with a low estimated path distance will be prioritized for selection.
 
-The current iteration does not use a closed set.
+The current implementation does not use a closed set. Some implementations I have seen do. From what I have gathered, a closed list is needed if the heuristic function is consistent. The Wikipedia article providing the pseudocode our implementation was based off of explains that the specific pseudocode allows for a heuristic function that is not consistent by adding nodes back to open_set if a more efficient path through it appears (https://stackoverflow.com/questions/45577114/a-star-algorithm-open-and-closed-lists). It allows for a heuristic function that is "admissible but not consistent" (https://en.wikipedia.org/wiki/A*_search_algorithm).  
+
+### Admissible Heuristic Functions
+
+An admissible heuristic function if the estimated path distance to the goal is not higher than the lowest possible path. It never overestimates the cost to the goal and acts as a lower bound (https://en.wikipedia.org/wiki/Admissible_heuristic).
+
+So, $h(n) <= h*(n)$, for all nodes $n$. $h*(n)$ is the true cost of the minimal cost path from n to goal. $h(n)$ is the estimated cost from n to goal (https://pages.cs.wisc.edu/~dyer/cs540/notes/search2.html).
+
+Our heuristic function simply assumes that the weight of each edge is 1; thus, $h(n)$ for a given node will always be the number of edges between $n$ and goal. Because, in our model, the weight of an edge must be a whole number greater than 0, this provides a minumum estimate. Thus, I believe our heuristic function is admissible. 
+
+### Consistent Heuristic Functions
+
+A consistent or monotone heuristic function is one where the "estimate is always less than or equal to the estimated distance from any neighbouring vertext to the goal, plus the cost of reaching that neighbor" (https://en.wikipedia.org/wiki/Consistent_heuristic).
+
+This article provides an equation:
+
+$h(N) \leq c(N,P) + h(P)$ and
+$h(G) = 0$
+
+- $h$: consistent heuristic function
+- $N$: any node in the graph
+- $P$: any descendant of $N$
+- $G$: goal node
+- $c(N,P)$: cost of reachng node $P$ from $N$ (in our case, the weight of the edge between the two)
+
+This means that the estimated distance from N to G must be less from the estimated distance from P to G, plus the distance from N to P (which, as neighbors, is their edge weight). The estimate of the distance from G to G must be 0. 
+
