@@ -1,4 +1,4 @@
-from bfs import bfs_dist, bfs_goal, bfs_dist_weighted
+from src.bfs import bfs_dist, bfs_goal, bfs_dist_weighted
 
 import pytest
 

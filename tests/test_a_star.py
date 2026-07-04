@@ -1,6 +1,6 @@
-from a_star import a_star
-from bfs import bfs_dist_weighted
-from convert_graph import directed_to_bidirectional
+from src.a_star import a_star
+from src.bfs import bfs_dist_weighted
+from src.convert_graph import directed_to_bidirectional
 
 import pytest
 
