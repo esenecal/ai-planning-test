@@ -134,3 +134,13 @@ I found this video explanation and accompanying Github repository demonstrating 
 In the video, Gerevini explains that goals are prioritized, with the highest priority goal being planned for. Plans are created by working back from the goal, using the requirements of the goal to find any action that fulfills it. If that action has its own set of preconditions, the planner then finds another action to fulfill that one. This continues until an action is reached in which all the world states are fulfilled (which, I believe, would mean you reach an action that has its precondition fulfilled by the current world state). The planner would also find various other plans, and selects the most optimal plan based on the lowest cost. The optimal plan is executed until it is completed (or otherwise invalidated) or another goal is prioritized.
 
 Given his example, it appears that specific goals are prioritized depending on the world state; the lack of a fire prioritizes the goal of building a fire, the existence of hunger prioritizes eating, etc.
+
+I took a look at the source code for his demo to see an example of an implementation, located at the GitHub repository above. After reviewing the `goap` folder, this is what I've found.
+
+- Actions: his actions do sort of contain this precondition check as `is_valid`. They also contain a precondition set, an action set, and an effect function.
+- Goals: his goals contained a priority and a desired world state. 
+- His action planner builds a graph based on a goal retrieved (I assume from an agent). It builds the graph on each execution, to account for any added actions. His yardstick for determining if an action should be used is determining if it can fulfill one condition in the desired world state. It also adds any preconditions for an action to the desired state. In other words, as we work back from the goal, it appears we are continually adding preconditions to the world state; each precondition can be satisfied by another action, and so our preconditions are added and fulfilled until we reach a point where they are all fulfilled. This means we found our starting action.
+- Each agent keeps track of their goals and current working goal, as well as the current plan they are executing.
+- I couldn't discern the search algorithm used in my brief look. Haiku 4.5 told me that there is a DFS in there, but I don't know if that's right. 
+
+I'm very grateful for Gerenvini's example; it gave me a good look on how GOAP can actually work in practice, which is very helpful giving me some direction for my implementation.
