@@ -1,12 +1,3 @@
-A possible heuristic algorithm works via a bfs algorithm. It constructs "layers" and associates each node in a dictionary with a numerical "layer" from the goal node. We know our goal node, so it can make this layer fairly easily and should provide a basic structure for subgoals. Then, we can calculate according to a* using this dictionary to provide the heuristic value. 
-
-## Using venv
-https://docs.python.org/3/library/venv.html
-
-## testing
-https://docs.pytest.org/en/stable/getting-started.html#get-started
-
-
 ## STRIPS
 STRIPS is made of an initial state, goal state, and a set of oeprators (actions) with preconditions and postconditions (requirements to be performed and effects on the world state).
 
@@ -99,3 +90,47 @@ $h(G) = 0$
 
 This means that the estimated distance from N to G must be less from the estimated distance from P to G, plus the distance from N to P (which, as neighbors, is their edge weight). The estimate of the distance from G to G must be 0. 
 
+A possible heuristic algorithm works via a bfs algorithm. It constructs "layers" and associates each node in a dictionary with a numerical "layer" from the goal node. We know our goal node, so it can make this layer fairly easily and should provide a basic structure for subgoals. Then, we can calculate according to a* using this dictionary to provide the heuristic value. 
+
+## Using venv
+https://docs.python.org/3/library/venv.html
+
+## testing
+https://docs.pytest.org/en/stable/getting-started.html#get-started
+
+## GOAP
+
+### GDC 2006 Paper
+
+This is what I have been able to gather on the Goal-Oriented Action Planning System and how it differs from STRIPS, from the GDC 2006 paper written by Jeff Orkins (https://www.gamedevs.org/uploads/three-states-plan-ai-of-fear.pdf)
+
+The STRIPS planning process, simply speaking, works with goals and actions, where goals describe a desired world state and actions are the means to modify that state. Actions rely on preconditions to be executed and have effects that alter the world state. Depending on a goal, a sequence of actions is planned to fulfill that goal. Effects contain a delete list and an add list. When an action is executed, the delete list removes items/negates them from the world state, while the add list adds.
+
+For implementation, each AI character has a set of goals that it is responsible for fulfilling. It seems that each goal has a semblence of priority--that is, the AI will do something, but external stimuli (the appearance of an enemy, for example) may change the goal (from 'patrol' to 'attack', for example). Each NPC then has an Action Set describing various actions that can be taken. 
+
+The GOAP System used in F.E.A.R. makes several alterations. The first is that it assigns a cost per action to each action, then uses A* to search through the actions to find a plan. In other words, if world states were nodes and actions were edges, I understand that we are know assigning a weight to each edge rather than keeping a weight of 1. This allows for prioritization of certain actions; if higher-priority (low-cost) actions are unattainable (the world state does not meet the preconditions), another action with a higher cost but valid preconditions will be used. 
+
+GOAP also removes the add/delete lists from actions. Rather, both preconditions and effects are represented in a world-state array. This means that you can easily see which actions have certain preconditions met by other actions' effects. I am not sure what they mean, as the wording seems a little vague; I believe it means rather than using add/delete lists to delete, then add knowledge to the world state, the preconditions and effects are described in separate arrays that simply display the required world state. In other words, the effects do not specify to delete and add something, but rather, to simply shift the world state to this new state. I am not sure, however. It is unclear if the entire world state is represented in these array, but it doesn't seem so (see next paragraph).
+
+Finally, GOAP uses procedural preconditions and effects. Preconditions use checks to ensure they are met, but only when they are needed; this is to avoid representing everything in the actions' world state arrays. Each action has the precondition world state variables array and a check function, which makes a check to ensure that this function is viable depending on the world state. If it is, then the action can be executed. This allows us to only check a precondition when needed, in cases when constantly checking a precondition would be inefficient. Procedural effects are used to apply the changes in world state to the game, to avoid an instantaneous effect. 
+
+So, this is what I have gathered from how this system would be implemented:
+- AI planning can be represented as a graph where nodes are the states and edges are the actions. 
+- Each action contains three attributes:
+    - An array of preconditions
+    - A cost (weight)
+    - An array of effects.
+- Each action contains two functions/methods:
+    - A precondition check (if needed)
+    - A effect function to apply the change and make it smoother.
+
+### Vinicius Gerevini Godot GOAP
+
+I found this video explanation and accompanying Github repository demonstrating GOAP in the Godot game engine. It was very helpful.
+
+- https://www.youtube.com/watch?v=LhnlNKWh7oc
+- https://github.com/viniciusgerevini/godot-goap 
+
+In the video, Gerevini explains that goals are prioritized, with the highest priority goal being planned for. Plans are created by working back from the goal, using the requirements of the goal to find any action that fulfills it. If that action has its own set of preconditions, the planner then finds another action to fulfill that one. This continues until an action is reached in which all the world states are fulfilled (which, I believe, would mean you reach an action that has its precondition fulfilled by the current world state). The planner would also find various other plans, and selects the most optimal plan based on the lowest cost. The optimal plan is executed until it is completed (or otherwise invalidated) or another goal is prioritized.
+
+Given his example, it appears that specific goals are prioritized depending on the world state; the lack of a fire prioritizes the goal of building a fire, the existence of hunger prioritizes eating, etc.
