@@ -27,4 +27,8 @@ This details the structure I will use for my GOAP system. I am using Jeff Orkin'
 
 `world_state` will be a dictionary detailing the entire state of the world. It will be mutable, but items will not be added or removed, only changed.
 
+Changes by effects to world state will be done via a method outside of `Action` by returning the `effects` dictionary and altering the world state. We will use the `update` function.
+
 have character use a priority queue for goals. This means we will have to assign priority within the agent's class, using a tuple or something.
+
+The highest priority goal is taken care of, then popped from the queue. If world state ever changes 
