@@ -3,10 +3,10 @@
 This details the structure I will use for my GOAP system. I am using Jeff Orkin's paper and Vinicius Gerevini's demo (see [notes.md](/notes.md)) as a launching off point, but will be implementing my own system as I see fit.
 
 ## Classes:
-- `goal`
+- `Goal`
     - Attributes:
         - `expected_state`: Dictionary. Expected state of the world (not exclusive--it only states whatever variables it is checking)
-- action
+- `Action`
     - Attributes:
         - `preconditions`: Dictionary. Required state of the world to be executed
         - `cost`: integer. Cost of the action, determined by the developer.
@@ -14,14 +14,14 @@ This details the structure I will use for my GOAP system. I am using Jeff Orkin'
     - Methods:
         - `apply_effect`: details the changes made.
     - A precondition check will not be implemented in the action class itself. Checking preconditions will be done in the planner.
-- character
+- `Character`
     - Attributes:
         - `goals`: set. all goals assigned to that character.
         - `goal_queue`: priority queue implemented with heapq. Contains tuples of (priority (int), goal).
         - `name`: everyone needs a name.
     - Methods:
         - `get_goal`: return the highest priority goal.
-- planner
+- `Planner`
 
 ## world_state
 
