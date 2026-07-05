@@ -138,7 +138,7 @@ Given his example, it appears that specific goals are prioritized depending on t
 I took a look at the source code for his demo to see an example of an implementation, located at the GitHub repository above. After reviewing the `goap` folder, this is what I've found.
 
 - Actions: his actions do sort of contain this precondition check as `is_valid`. They also contain a precondition set, an action set, and an effect function.
-- Goals: his goals contained a priority and a desired world state. 
+- Goals: his goals contained a priority and a desired world state. If a goal has dynamic priority, it appears the implementation for this is contained within the goal object.
 - His action planner builds a graph based on a goal retrieved (I assume from an agent). It builds the graph on each execution, to account for any added actions. His yardstick for determining if an action should be used is determining if it can fulfill one condition in the desired world state. It also adds any preconditions for an action to the desired state. In other words, as we work back from the goal, it appears we are continually adding preconditions to the world state; each precondition can be satisfied by another action, and so our preconditions are added and fulfilled until we reach a point where they are all fulfilled. This means we found our starting action.
 - Each agent keeps track of their goals and current working goal, as well as the current plan they are executing.
 - I couldn't discern the search algorithm used in my brief look. Haiku 4.5 told me that there is a DFS in there, but I don't know if that's right. 
