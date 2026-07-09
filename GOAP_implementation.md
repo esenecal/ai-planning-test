@@ -39,7 +39,7 @@ This graph shows the flow of actions and states to bake a cake.
 
 ```mermaid
 graph LR
-    all_false(all false)
+    all_false(all false except hungry = True)
     oven_hot(oven_hot = true)
     have_wet_ing(have_wet_ing = true
                 have_dry_ing = true)
@@ -58,7 +58,14 @@ graph LR
 
 ### Goal:
 
-There is one goal state: `cake = True`
+There is one goal state: `not_hungry` where:
+```python
+{
+    hungry = False
+}
+```
+
+If `hungry = False` for some time, it reverts back to `True`, and we bake another cake.
 
 This is the world state:
 ```python
@@ -68,6 +75,7 @@ This is the world state:
     have_dry_ing: bool
     have_batter: bool
     cake: bool
+    hungry: bool
 }
 ```
 
@@ -75,11 +83,15 @@ This is the world state:
 
 | Action            | Preconditions                                     | Effects                                                                       | 
 |-------------------|-----------------------                            |-------------------                                                            |
-| `heat_oven`       | None                                              | `oven_hot = True`                                                             |
+| `heat_oven`       | `hungry = True`                                   | `oven_hot = True`                                                             |
 | `mix_dry_ing`     | `oven_hot = True`                                 | `have_dry_ing = True`                                                         |
 | `mix_wet_ing`     | `have_dry_ing = True`                             | `have_wet_ing = True`                                                         |
 | `mix_batter`      | `have_dry_ing = True`<br>`have_wet_ing = True`    | `have_batter = True` <br> `have_dry_ing = False` <br> `have_wet_ing = False`  |
 | `bake`            | `have_batter = True`                              | `cake = True` <br> `oven_hot = False` <br> `have_batter = False`              | 
-| `eat`             | `cake = True`                                     | `cake = False`                                                                |
+| `eat`             | `cake = True`                                     | `cake = False`<br>`hungry = False`                                            |
 
 Note that the effects of `mix_wet_ing` makes `have_wet_ing` true, without altering `have_dry_ing`.
+
+We could add `oven_hot` as preconditions for all other actions that come after, but that is implied.
+
+It could be beneficial to use enum style types for the world style types for the states. At the end of the day, though, it doesn't do much.

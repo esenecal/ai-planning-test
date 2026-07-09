@@ -6,5 +6,10 @@ class Action:
         self.effects = effects
         self.text = text
 
+    def blank_init(self) -> None:
+        self.preconditions: dict = {}
+        self.cost: int = 1
+        self.effects: dict = {}
+
     def apply_effects(self):    # display message when Action is executed.
         print(self.text)
