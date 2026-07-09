@@ -143,4 +143,28 @@ I took a look at the source code for his demo to see an example of an implementa
 - Each agent keeps track of their goals and current working goal, as well as the current plan they are executing.
 - I couldn't discern the search algorithm used in my brief look. Haiku 4.5 told me that there is a DFS in there, but I don't know if that's right. 
 
+On `action_planner.gd`:
+`_build_plans`:
+- The comments state that each node of the graph has a desired state. Remember: nodes are states, actions are edges.
+- _build_plans runs recursively. It takes a step, which is a dictionary containing an action (goal), state (desired state), and children. 
+- When _build_plans is run, it saves the step state (desired state) and saves it in a variable. It checks if the step state is empty, indicating that this branch has found a solution.
+- It then iterates through an array of actions (which appears to be all actions). For each action it:
+    - checks if the action is valid (a validation check, see below)
+    - checks if the action satisfies at least one condition of the desired state. If it does, remove this condition from our desired state. It has been fulfilled.
+    - If at least one condition is satisfied, the preconditions of this action are set (or added?) to the new desired state (remember, we are working backwards). The function is then recursively called.
+    - In effect, we are working backwards from the goal, checking if an action satisfies what we want. If it does, we save it and add the preconditions to our desired state, effectively making those preconditions part of our goal now. Now, when we search for another action, we find one that fulfills these new states. 
+- Some of these--and this is a personal note here--aspects of the algorithm are likely not set in stone. For example, the specific search algorithm he uses and how he tracks states are probably not necessary. I could use a different algorithm if needed. Likewise, the recursive implementation is likely not necessary. If I want to hard-code the map, that may be possible and would lend itself to a different solution. What is most impactful to me from this is the example of iterating through the graph with a desired state, using preconditions to search for actions.
+
 I'm very grateful for Gerenvini's example; it gave me a good look on how GOAP can actually work in practice, which is very helpful giving me some direction for my implementation.
+
+### AI and Games YouTube Video
+
+https://www.youtube.com/watch?v=PaOLBOuyswI&t=685s
+
+Some notes from this video:
+- There are various actions described in the code of F.E.A.R. Each has its own class, and are assigned to relative agents.
+- The game performs plan validations to ensure that, if the world state changes while a plan is being made/executed, the plan or goal changes to match.
+    - A fresh plan is validated by the system by running a simulation of the plan on the current world state, ensuring that all goes correctly.
+    - A Replan Required function checks if the current plan be changed, continuously. A goal can override this function.
+    - Each action is evaluated in execution, ensuring the preconditions and effects can be met. When the check is complete, the action is executed.
+- The plans are typically 1-2 actions long--very short. There are a lot of actions, but a lot of goals too.
