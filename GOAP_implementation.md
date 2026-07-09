@@ -13,7 +13,7 @@ This details the structure I will use for my GOAP system. I am using Jeff Orkin'
         - `effects`: Dictionary. Changes made to the state of the world.
     - Methods:
         - `apply_effect`: details the changes made.
-    - A precondition check will not be implemented in the action class itself. Checking preconditions will be done in the planner.
+    - The examples I have seen implement separate classes for each action. I will do that here. 
 - `Character`
     - Attributes:
         - `goals`: set. all goals assigned to that character.
@@ -32,3 +32,54 @@ Changes by effects to world state will be done via a method outside of `Action` 
 have character use a priority queue for goals. This means we will have to assign priority within the agent's class, using a tuple or something.
 
 The highest priority goal is taken care of, then popped from the queue. If world state ever changes 
+
+## The Cooking Process
+
+This graph shows the flow of actions and states to bake a cake.
+
+```mermaid
+graph LR
+    all_false(all false)
+    oven_hot(oven_hot = true)
+    have_wet_ing(have_wet_ing = true
+                have_dry_ing = true)
+    have_dry_ing(have_dry_ing = true)
+    have_batter(have_batter = true)
+    cake(cake = true)
+
+    all_false 
+    --heat_oven--> oven_hot 
+    --mix_dry_ing--> have_dry_ing 
+    --mix_wet_ing--> have_wet_ing
+    --mix_batter--> have_batter
+    --bake--> cake
+    --eat--> all_false
+```
+
+### Goal:
+
+There is one goal state: `cake = True`
+
+This is the world state:
+```python
+{
+    oven_hot: bool
+    have_wet_ing: bool
+    have_dry_ing: bool
+    have_batter: bool
+    cake: bool
+}
+```
+
+### Actions
+
+| Action            | Preconditions                                     | Effects                                                                       | 
+|-------------------|-----------------------                            |-------------------                                                            |
+| `heat_oven`       | None                                              | `oven_hot = True`                                                             |
+| `mix_dry_ing`     | `oven_hot = True`                                 | `have_dry_ing = True`                                                         |
+| `mix_wet_ing`     | `have_dry_ing = True`                             | `have_wet_ing = True`                                                         |
+| `mix_batter`      | `have_dry_ing = True`<br>`have_wet_ing = True`    | `have_batter = True` <br> `have_dry_ing = False` <br> `have_wet_ing = False`  |
+| `bake`            | `have_batter = True`                              | `cake = True` <br> `oven_hot = False` <br> `have_batter = False`              | 
+| `eat`             | `cake = True`                                     | `cake = False`                                                                |
+
+Note that the effects of `mix_wet_ing` makes `have_wet_ing` true, without altering `have_dry_ing`.
