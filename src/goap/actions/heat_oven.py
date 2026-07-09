@@ -6,4 +6,4 @@ class HeatOven:
         self.effects: dict = { "oven_hot": True }
 
     def apply_effects(self) -> None:
-        print("Chell turns on the oven to preheat.")
+        print("Bill turns on the oven to preheat.")

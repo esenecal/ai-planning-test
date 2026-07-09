@@ -6,4 +6,4 @@ class MixWetIng:
         self.effects: dict = { "have_wet_ing": True }
 
     def apply_effects(self) -> None:
-        print("Chell mixes the wet ingredients in a bowl.")
+        print("Bill mixes the wet ingredients.")

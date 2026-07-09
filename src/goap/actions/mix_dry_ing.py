@@ -6,4 +6,4 @@ class MixDryIng:
         self.effects: dict = { "have_dry_ing": True }
 
     def apply_effects(self) -> None:
-        print("Chell mixes the dry ingredients.")
+        print("Bill mixes the dry ingredients.")

@@ -9,4 +9,4 @@ class MixBatter:
                                 "have_wet_ing": False }
 
     def apply_effects(self) -> None:
-        print("Chell adds the wet ingredients to the dry and mixes.")
+        print("Bill adds the wet ingredients to the dry and mixes to get batter.")
