@@ -1,4 +1,4 @@
-from dijkstra import dijkstra_distance, dijkstra_goal
+from src.dijkstra import dijkstra_distance, dijkstra_goal
 
 import pytest
 

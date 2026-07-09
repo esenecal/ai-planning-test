@@ -1,7 +1,7 @@
 # AI Planning Test
 
-This project is an exercise to create a goal oriented planning system based on the system used by Monolith Productions in the game F.E.A.R. After hearing about the notable AI systems used in this game, I found [a paper](https://www.gamedevs.org/uploads/three-states-plan-ai-of-fear.pdf) by Jeff Orkin written on their AI planning system, called GOAP (Goal-Oriented Action Planning), which was based on STRIPS, the STanford Research Institute Problem Solver (the paper written by Richard Fikes and Nils Nilsson on it can be found [here](https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/strips.pdf)).
+This is a test AI system based on the GOAP system, which was used by Monolith productions in the game F.E.A.R.
 
-From what I have gathered from these papers, STRIPS works on a defined world state, a goal condition of the world state, and operators that provide actions to alter the world state (Fikes and Nilsson, p.1-4). If the world state is provided, the goal state known, and proper actions available, the AI system can select actions that will properly fulfill the goal state (Orkin seems to use the term "action" in place of "operator", so I'll do the same).
+See [notes.md](/notes.md) for various notes on sources I have used to learn more. 
 
-The AI system must determine which actions are best to fulfill the goal state; if needed, it can create subgoals to work on to fulfill the goal state (Fikes and Nilsson, p.5).
+[GOAP_implementation.md](/GOAP_implementation.md) explains the GOAP implementation.

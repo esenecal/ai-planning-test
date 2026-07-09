@@ -59,26 +59,3 @@ def a_star(graph, root, goal, h):
                     in_open_set.add(adjacent_node_name)                                             # update the queue tracker
         
     return "error"
-                
-
-
-
-test_weighted_graph_1 = {       # each has a tuple showing the weight between the nodes
-    "a": [("b", 2), ("d", 1)],
-    "b": [("a", 2), ("c", 3), ("d", 2), ("e", 4), ("f", 5)], 
-    "c": [("b", 3), ("e", 1)], 
-    "d": [("a", 1), ("b", 2), ("e", 3)], 
-    "e": [("b", 4), ("c", 1), ("d", 3), ("f", 2)], 
-    "f": [("b", 5), ("e", 2)]
-}
-
-h = {
-        "a": 2,
-        "b": 1,
-        "c": 2,
-        "d": 2,
-        "e": 1,
-        "f": 0
-    }
-
-print(a_star(test_weighted_graph_1, "a", "f", h))
