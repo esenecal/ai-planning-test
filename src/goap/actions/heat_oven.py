@@ -5,5 +5,5 @@ class HeatOven:
         self.cost: int = 1
         self.effects: dict = { "oven_hot": True }
 
-    def apply_effects(self) -> None:
-        print("Bill turns on the oven to preheat.")
+    def apply_effects(self, name) -> None:
+        print(name + " turns on the oven to preheat.")

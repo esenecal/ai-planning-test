@@ -8,5 +8,5 @@ class Bake:
                               "have_batter": False,
                                }
 
-    def apply_effects(self) -> None:
-        print("Bill puts the batter into the oven to bake. He takes a cake out after 20 minutes.")
+    def apply_effects(self, name) -> None:
+        print(name + " puts the batter into the oven to bake. He takes a cake out after 20 minutes.")

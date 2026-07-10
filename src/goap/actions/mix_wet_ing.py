@@ -5,5 +5,5 @@ class MixWetIng:
         self.cost: int = 1
         self.effects: dict = { "have_wet_ing": True }
 
-    def apply_effects(self) -> None:
-        print("Bill mixes the wet ingredients.")
+    def apply_effects(self, name) -> None:
+        print(name + " mixes the wet ingredients.")

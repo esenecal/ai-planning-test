@@ -11,5 +11,5 @@ class Action:
         self.cost: int = 1
         self.effects: dict = {}
 
-    def apply_effects(self):    # display message when Action is executed.
+    def apply_effects(self, name):    # display message when Action is executed.
         print(self.text)

@@ -7,5 +7,3 @@ class Character:
         self.name = name
         self.goals = goals                      # simply for reference.
         self.goal_queue = heapq.heapify(goals)  # convert goals into a priority queue.
-
-    

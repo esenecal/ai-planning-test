@@ -6,5 +6,5 @@ class Eat:
         self.effects: dict = { "cake": False,
                                 "hungry": False }
 
-    def apply_effects(self) -> None:
-        print("Bill eats the cake.")
+    def apply_effects(self, name) -> None:
+        print(name + " eats the cake.")
