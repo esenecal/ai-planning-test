@@ -1,7 +1,7 @@
 
 # import the goals and actions.
 import goals 
-from actions import bake, eat, heat_oven, mix_batter, mix_dry_ing, mix_wet_ing
+from actions import *
 import copy
 
 # The planner.
@@ -14,6 +14,15 @@ world_state: dict = {
     "have_batter": False,
     "cake": False,
     "hungry": True
+}
+
+actions = {
+    Bake,
+    Eat,
+    HeatOven,
+    MixBatter,  
+    MixDryIng,
+    MixWetIng
 }
 
 
@@ -33,5 +42,7 @@ def build_plan(goal):
     # start at the desired_state.
 
     # search all possible actions; find one that fulfills part of the desired_state.
+    # for action in actions:
+    #     if action.effects 
     
     # set this as 
