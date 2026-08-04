@@ -1,7 +1,8 @@
 
 # import the goals and actions.
-import goals
-import actions
+import goals 
+from actions import bake, eat, heat_oven, mix_batter, mix_dry_ing, mix_wet_ing
+import copy
 
 # The planner.
 
@@ -15,13 +16,28 @@ world_state: dict = {
     "hungry": True
 }
 
+actions = {
+    bake = bake.Bake(),
+}
+
 
 
 # iterate through the actions to find a path until the desired state matches the world state.
 # the desired state is determined by the goal.
-# as the search, we will use an implementation of a*, though the h value will be 0, effectively making it dijkstra's algorithm.
+# as the search, we will use dijkstra's algorithm.
 # speed is not the issue right now; we also need to determine a way to find a reasonable heuristic value.
-def build_plan(root):
+# Vinicius Gerevini's code made multiple routes and found the most efficient one; we won't do that here (yet).
+def build_plan(goal):                   
+    goal_state = goal.expected_state    # the expected state that we want to reach
 
-    desired_state: dict = dict()
+    # check if goal_state is already fulfilled. if so, terminate.
 
+    # set the desired state to be the expected state.
+    desired_state = copy.deepcopy(goal.expected_state)  # copying over the expected state
+
+    # start at the desired_state.
+
+    # search all possible actions; find one that fulfills part of the desired_state.
+    for all
+
+    # set this as 

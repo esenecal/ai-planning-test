@@ -2,8 +2,8 @@ class Bake:
 
     def __init__(self) -> None:
         self.preconditions: dict = { "have_batter": True }
-        self.cost: int = 1
-        self.effects: dict = { "cake": True,
+        cost: int = 1
+        effects: dict = { "cake": True,
                               "oven_hot": False,
                               "have_batter": False,
                                }

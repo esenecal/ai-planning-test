@@ -16,7 +16,7 @@ class Character:
     # characters will be created as objects from this one class.
 
     # This assumes priorities do not change. Eventually, we will need to implement a dynamic system that changes priorities according
-    # to external stimuli.
+    # to external stimuli (i.e. according to the world state)
 
     # get highest priority goal, without priority
     def get_priority_goal(self) -> Goal:
@@ -29,6 +29,8 @@ class Character:
 
     # get the plan for the highest priority goal.
     def get_plan(self) -> None:
-        
+        # implement after planner
         return None
     
+    # goals can change depending on world state. to avoid copying in the entire world state to check it, maybe just create a funciton
+    # that checks a specific aspect of the world state. def check_world_state(key): returns value
