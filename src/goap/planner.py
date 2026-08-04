@@ -33,6 +33,7 @@ actions = {
 # Vinicius Gerevini's code made multiple routes and found the most efficient one; we won't do that here (yet).
 def build_plan(goal):                   
     goal_state = goal.expected_state    # the expected state that we want to reach
+    plan = list()
 
     # check if goal_state is already fulfilled. if so, terminate.
 
@@ -42,7 +43,11 @@ def build_plan(goal):
     # start at the desired_state.
 
     # search all possible actions; find one that fulfills part of the desired_state.
-    # for action in actions:
-    #     if action.effects 
-    
+    action = get_possible_action(desired_state)
+
     # set this as 
+
+def get_possible_action(desired_state):
+    for action in actions:  # see if there is any overlap between the desired state and action's effects. if so, select it. Haiku 4.5 helped me out with the set intersection.
+        if set(action.effects.items()) & set(desired_state):
+            return action

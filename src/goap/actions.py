@@ -7,7 +7,8 @@ class Bake:
                      "have_batter": False,
                      }
 
-    def apply_effects(self, name) -> None:
+    @staticmethod
+    def apply_effects(name) -> None:
         print(name + " puts the batter into the oven to bake. He takes a cake out after 20 minutes.")
 
 class Eat:
@@ -17,7 +18,8 @@ class Eat:
     effects: dict = { "cake": False,
                    "hungry": False }
 
-    def apply_effects(self, name) -> None:
+    @staticmethod
+    def apply_effects(name) -> None:
         print(name + " eats the cake.")
 
 class HeatOven:
@@ -26,7 +28,8 @@ class HeatOven:
     cost: int = 1
     effects: dict = { "oven_hot": True }
 
-    def apply_effects(self, name) -> None:
+    @staticmethod
+    def apply_effects(name) -> None:
         print(name + " turns on the oven to preheat.")
 
 class MixBatter:
@@ -38,7 +41,8 @@ class MixBatter:
                                 "have_dry_ing": False,
                                 "have_wet_ing": False }
 
-    def apply_effects(self, name) -> None:
+    @staticmethod
+    def apply_effects(name) -> None:
         print(name + " adds the wet ingredients to the dry and mixes to get batter.")
 
 class MixDryIng:
@@ -47,7 +51,8 @@ class MixDryIng:
     cost: int = 1
     effects: dict = { "have_dry_ing": True }
 
-    def apply_effects(self, name) -> None:
+    @staticmethod
+    def apply_effects(name) -> None:
         print(name + " mixes the dry ingredients.")
 
 class MixWetIng:
@@ -56,5 +61,6 @@ class MixWetIng:
     cost: int = 1
     effects: dict = { "have_wet_ing": True }
 
-    def apply_effects(self, name) -> None:
+    @staticmethod
+    def apply_effects(name) -> None:
         print(name + " mixes the wet ingredients.")
