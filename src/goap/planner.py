@@ -16,11 +16,6 @@ world_state: dict = {
     "hungry": True
 }
 
-actions = {
-    bake = bake.Bake(),
-}
-
-
 
 # iterate through the actions to find a path until the desired state matches the world state.
 # the desired state is determined by the goal.
@@ -38,6 +33,5 @@ def build_plan(goal):
     # start at the desired_state.
 
     # search all possible actions; find one that fulfills part of the desired_state.
-    for all
-
+    
     # set this as 

@@ -1,9 +1,8 @@
 class HeatOven:
 
-    def __init__(self) -> None:
-        self.preconditions: dict = { "hungry": True }
-        self.cost: int = 1
-        self.effects: dict = { "oven_hot": True }
+    preconditions: dict = { "hungry": True }
+    cost: int = 1
+    effects: dict = { "oven_hot": True }
 
     def apply_effects(self, name) -> None:
         print(name + " turns on the oven to preheat.")

@@ -1,10 +1,9 @@
 class MixBatter:
 
-    def __init__(self) -> None:
-        self.preconditions: dict = { "have_dry_ing": True,
-                                     "have_wet_ing": True }
-        self.cost: int = 1
-        self.effects: dict = { "have_batter": True,
+    preconditions: dict = { "have_dry_ing": True,
+                               "have_wet_ing": True }
+    cost: int = 1
+    effects: dict = { "have_batter": True,
                                 "have_dry_ing": False,
                                 "have_wet_ing": False }
 
