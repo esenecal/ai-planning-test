@@ -40,6 +40,7 @@ This graph shows the flow of actions and states to bake a cake.
 ```mermaid
 graph LR
     all_false(all false except hungry = True)
+    not_hungry(hungry = false)
     oven_hot(oven_hot = true)
     have_wet_ing(have_wet_ing = true
                 have_dry_ing = true)
@@ -53,7 +54,8 @@ graph LR
     --mix_wet_ing--> have_wet_ing
     --mix_batter--> have_batter
     --bake--> cake
-    --eat--> all_false
+    --eat--> not_hungry
+    --(time passes)-->all_false
 ```
 
 ### Goal:

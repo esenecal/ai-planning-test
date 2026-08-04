@@ -16,7 +16,7 @@ world_state: dict = {
     "hungry": True
 }
 
-actions = {
+actions: set[type[Action]] = {  # Haiku 4.5 helped explain that this needed to be type[Action] (Action and its subclasses), not Action (just Action)
     Bake,
     Eat,
     HeatOven,
@@ -43,16 +43,24 @@ def build_plan(goal):
     # start at the desired_state.
 
     # search all possible actions; find one that fulfills part of the desired_state.
-    action = get_possible_action(desired_state)
+    action: type[Action] = get_possible_action(desired_state)
     plan.insert(0, action)         # add action to our path (in the front)
 
-    # update desired state. add the precondition (or update the existing state) of action.
+
+    # remove the parts of the desired_state that were fufilled by the action (that matched the action's effects). We do not need to worry about those.
+    # TO do
+
+
+    # add the precondition (or update the existing state) of action.
     desired_state.update(action.preconditions)
+
+    
 
 
     # set this as 
 
-def get_possible_action(desired_state):
+def get_possible_action(desired_state) -> type[Action]:
     for action in actions:  # see if there is any overlap between the desired state and action's effects. if so, select it. Haiku 4.5 helped me out with the set intersection.
         if set(action.effects.items()) & set(desired_state):
             return action
+    raise TypeError("a legit action does not exist")
