@@ -44,6 +44,11 @@ def build_plan(goal):
 
     # search all possible actions; find one that fulfills part of the desired_state.
     action = get_possible_action(desired_state)
+    plan.insert(0, action)         # add action to our path (in the front)
+
+    # update desired state. add the precondition (or update the existing state) of action.
+    desired_state.update(action.preconditions)
+
 
     # set this as 
 
